@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CHARSTUDIO.ID | Premium Agency Hub</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Google & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              black: '#0A0E17',
+              darker: '#0F1524',
+              blue: '#2563EB',     
+              indigo: '#4F46E5',   
+              violet: '#7C3AED',   
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #0A0E17;
+      color: #F3F4F6;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    .glass-nav {
+      background: rgba(10, 14, 23, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .glass-card {
+      background: rgba(15, 21, 36, 0.6);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .glass-card:hover {
+      border-color: rgba(124, 58, 237, 0.3);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px 0 rgba(124, 58, 237, 0.1);
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0A0E17;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #4F46E5;
+      border-radius: 10px;
+    }
+
+    .neon-text {
+      text-shadow: 0 0 10px rgba(124, 58, 237, 0.4);
+    }
+    
+    .neon-border {
+      box-shadow: 0 0 15px rgba(124, 58, 237, 0.2);
+    }
+
+    .section-active {
+      display: block;
+      animation: fadeIn 0.5s ease-out forwards;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- ==========================================
+       TOP NAVIGATION BAR
+       ========================================== -->
+  <header class="fixed top-0 left-0 right-0 z-50 glass-nav">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Logo Profile (Sesuai Gambar 15.41.02_2.png) -->
+        <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('home')">
+          <div class="w-10 h-10 flex items-center justify-center bg-white rounded-full p-0.5 shadow-md">
+            <svg class="w-full h-full" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="256" cy="256" r="240" fill="white"/>
+              <defs>
+                <linearGradient id="logoGradientProfile" x1="100" y1="100" x2="412" y2="412" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#2563EB"/>
+                  <stop offset="100%" stop-color="#7C3AED"/>
+                </linearGradient>
+              </defs>
+              <path d="M 340,140 C 230,140 140,210 140,300 C 140,380 210,430 300,430 C 315,430 350,420 350,400 C 350,385 330,375 315,375 C 240,375 195,335 195,290 C 195,230 250,195 320,195 C 335,195 350,190 350,175 C 350,155 315,140 340,140 Z" fill="url(#logoGradientProfile)"/>
+              <path d="M 172,372 C 282,372 372,302 372,212 C 372,132 302,82 213,82 C 198,82 163,92 163,112 C 163,127 183,137 198,137 C 273,137 318,177 318,222 C 318,282 263,317 193,317 C 178,317 163,322 163,337 C 163,357 198,372 172,372 Z" fill="url(#logoGradientProfile)"/>
+            </svg>
+          </div>
+          <span class="text-xl font-bold tracking-wider text-white">CHARSTUDIO<span class="text-brand-violet font-semibold">.ID</span></span>
+        </div>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden md:flex items-center gap-8 text-sm font-semibold">
+          <button onclick="switchTab('home')" id="nav-home" class="transition-colors hover:text-brand-violet text-brand-violet">Home</button>
+          <button onclick="switchTab('about')" id="nav-about" class="transition-colors hover:text-brand-violet text-gray-300">About Us</button>
+          <button onclick="switchTab('portfolio')" id="nav-portfolio" class="transition-colors hover:text-brand-violet text-gray-300">Portfolio</button>
+          <button onclick="switchTab('calculator')" id="nav-calculator" class="transition-colors hover:text-brand-violet text-gray-300">Calculator & Contact</button>
+        </nav>
+
+        <!-- CTA & Phone Dynamic Link -->
+        <div class="hidden lg:flex items-center gap-4">
+          <a id="phone-nav-btn" href="https://wa.me/6282150904713" target="_blank" class="text-gray-300 hover:text-brand-violet transition-colors p-2" title="Hubungi Kami">
+            <i data-lucide="phone-call" class="w-5 h-5"></i>
+          </a>
+          <button onclick="switchTab('calculator')" class="bg-gradient-to-r from-brand-blue to-brand-violet hover:from-brand-blue/90 hover:to-brand-violet/90 text-white font-semibold text-xs px-5 py-2.5 rounded-lg transition-all duration-300 transform active:scale-95 shadow-md shadow-indigo-950/30">
+            Get Proposal
+          </button>
+        </div>
+
+        <!-- Mobile Navigation Menu Toggle Button -->
+        <div class="md:hidden flex items-center">
+          <button id="mobile-menu-btn" class="text-white hover:text-brand-violet focus:outline-none" onclick="toggleMobileMenu()">
+            <i data-lucide="menu" class="w-6 h-6"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Panel -->
+    <div id="mobile-menu" class="hidden md:hidden bg-brand-darker border-t border-white/5 px-4 py-4 space-y-3">
+      <button onclick="switchTab('home'); toggleMobileMenu()" class="block w-full text-left text-gray-300 hover:text-brand-violet py-2 font-medium">Home</button>
+      <button onclick="switchTab('about'); toggleMobileMenu()" class="block w-full text-left text-gray-300 hover:text-brand-violet py-2 font-medium">About Us</button>
+      <button onclick="switchTab('portfolio'); toggleMobileMenu()" class="block w-full text-left text-gray-300 hover:text-brand-violet py-2 font-medium">Portfolio</button>
+      <button onclick="switchTab('calculator'); toggleMobileMenu()" class="block w-full text-left text-gray-300 hover:text-brand-violet py-2 font-medium">Calculator & Contact</button>
+      <div class="pt-2 border-t border-white/5 flex gap-4">
+        <a id="phone-nav-btn-mobile" href="https://wa.me/6282150904713" target="_blank" class="text-gray-300 hover:text-brand-violet flex items-center gap-2 text-sm">
+          <i data-lucide="phone-call" class="w-4 h-4"></i> Hubungi Kami
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================
+       MAIN CONTENT CONTAINER
+       ========================================== -->
+  <main class="flex-grow pt-24 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+    
+    <!-- ==========================================
+         SECTION 1: HOME
+         ========================================== -->
+    <section id="section-home" class="section-active py-12 md:py-20">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <!-- Hero Information -->
+        <div class="space-y-6">
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-violet/10 border border-brand-violet/30 text-brand-violet text-xs font-semibold uppercase tracking-wider">
+            <span class="flex h-2 w-2 rounded-full bg-brand-violet animate-pulse"></span>
+            Professional Web Agency Partner
+          </div>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
+            Building Digital Products That <span class="text-brand-blue neon-text">Drive Growth</span>
+          </h1>
+          <p class="text-gray-400 text-lg leading-relaxed max-w-lg">
+            Selamat datang di CHARSTUDIO.ID. Kami merancang, mengembangkan, dan menskalakan solusi teknologi kustom terbaik untuk membantu bisnis Anda melangkah lebih cepat di era digital.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 pt-4">
+            <button onclick="switchTab('calculator')" class="bg-gradient-to-r from-brand-blue to-brand-violet text-white px-8 py-3.5 rounded-xl font-bold transition-all transform hover:-translate-y-0.5 active:scale-95 shadow-lg shadow-indigo-950/50 flex items-center justify-center gap-2 text-sm">
+              Mulai Kalkulasi Harga
+              <i data-lucide="chevron-right" class="w-4 h-4"></i>
+            </button>
+            <button onclick="switchTab('portfolio')" class="border border-white/10 hover:border-brand-violet/30 hover:bg-white/5 px-8 py-3.5 rounded-xl font-bold transition-all text-sm text-gray-300 flex items-center justify-center gap-2">
+              Lihat Hasil Karya <i data-lucide="external-link" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Custom Brand Card (Revisi: Hanya Logo Profile & Nama) -->
+        <div class="relative flex justify-center items-center py-8">
+          <div class="absolute inset-0 bg-gradient-to-tr from-brand-violet/10 to-transparent blur-3xl rounded-full"></div>
+          <div class="glass-card p-12 rounded-3xl w-full max-w-md relative z-10 neon-border flex flex-col items-center justify-center text-center space-y-6">
+            
+            <!-- Logo Bulat Putih Besar (Replikasi Persis Logo Asli Anda) -->
+            <div class="w-32 h-32 flex items-center justify-center bg-white rounded-full p-0.5 shadow-2xl shadow-indigo-500/10">
+              <svg class="w-full h-full" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="256" cy="256" r="240" fill="white"/>
+                <defs>
+                  <linearGradient id="logoGradientHome" x1="100" y1="100" x2="412" y2="412" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stop-color="#2563EB"/>
+                    <stop offset="100%" stop-color="#7C3AED"/>
+                  </linearGradient>
+                </defs>
+                <path d="M 340,140 C 230,140 140,210 140,300 C 140,380 210,430 300,430 C 315,430 350,420 350,400 C 350,385 330,375 315,375 C 240,375 195,335 195,290 C 195,230 250,195 320,195 C 335,195 350,190 350,175 C 350,155 315,140 340,140 Z" fill="url(#logoGradientHome)"/>
+                <path d="M 172,372 C 282,372 372,302 372,212 C 372,132 302,82 213,82 C 198,82 163,92 163,112 C 163,127 183,137 198,137 C 273,137 318,177 318,222 C 318,282 263,317 193,317 C 178,317 163,322 163,337 C 163,357 198,372 172,372 Z" fill="url(#logoGradientHome)"/>
+              </svg>
+            </div>
+
+            <!-- Nama Brand Tunggal -->
+            <h2 class="text-2xl font-extrabold tracking-wider text-white">CHARSTUDIO<span class="text-brand-violet">.ID</span></h2>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Statistics -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 md:mt-24">
+        <div class="glass-card p-6 rounded-2xl text-center">
+          <div class="text-3xl font-extrabold text-brand-violet neon-text mb-1">50+</div>
+          <div class="text-xs text-gray-400 uppercase tracking-wider font-semibold">Projects Completed</div>
+        </div>
+        <div class="glass-card p-6 rounded-2xl text-center">
+          <div class="text-3xl font-extrabold text-white mb-1">99%</div>
+          <div class="text-xs text-gray-400 uppercase tracking-wider font-semibold">Happy Clients</div>
+        </div>
+        <div class="glass-card p-6 rounded-2xl text-center">
+          <div class="text-3xl font-extrabold text-white mb-1">24/7</div>
+          <div class="text-xs text-gray-400 uppercase tracking-wider font-semibold">Active Support</div>
+        </div>
+        <div class="glass-card p-6 rounded-2xl text-center">
+          <div class="text-3xl font-extrabold text-brand-violet neon-text mb-1">&lt;10d</div>
+          <div class="text-xs text-gray-400 uppercase tracking-wider font-semibold">Average Delivery</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SECTION 2: ABOUT US
+         ========================================== -->
+    <section id="section-about" class="hidden py-12">
+      <div class="text-center max-w-2xl mx-auto mb-16 space-y-4">
+        <div class="text-brand-violet text-sm uppercase tracking-widest font-extrabold">Who We Are</div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Crafting Code & Driving Business Progress</h2>
+        <p class="text-gray-400">
+          CHARSTUDIO.ID berdedikasi membangun aplikasi web modern yang bukan sekadar fungsional, tetapi juga memberikan dampak nyata bagi transformasi bisnis klien kami.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch mb-16">
+        <div class="glass-card p-8 rounded-2xl flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="w-12 h-12 bg-brand-violet/10 rounded-xl flex items-center justify-center text-brand-violet">
+              <i data-lucide="target" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white">Our Mission</h3>
+            <p class="text-sm text-gray-400 leading-relaxed">
+              Menghadirkan layanan pengembangan software yang efisien, handal, transparan, dan berorientasi langsung terhadap peningkatan performa komersial bisnis klien.
+            </p>
+          </div>
+        </div>
+
+        <div class="glass-card p-8 rounded-2xl flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="w-12 h-12 bg-brand-violet/10 rounded-xl flex items-center justify-center text-brand-violet">
+              <i data-lucide="eye" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white">Our Vision</h3>
+            <p class="text-sm text-gray-400 leading-relaxed">
+              Menjadi mitra strategis utama agensi digital di Indonesia yang dikenal karena inovasi teknis cerdas, keamanan sistem unggul, serta ketepatan waktu pengiriman.
+            </p>
+          </div>
+        </div>
+
+        <div class="glass-card p-8 rounded-2xl flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="w-12 h-12 bg-brand-violet/10 rounded-xl flex items-center justify-center text-brand-violet">
+              <i data-lucide="heart" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white">Why Choose Us</h3>
+            <p class="text-sm text-gray-400 leading-relaxed">
+              Kami menggabungkan backend kokoh dengan UI premium, memberikan dukungan pemeliharaan jangka panjang, serta menerapkan harga adil yang fleksibel.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="text-2xl font-extrabold text-white text-center mb-8">What We Do</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        <div class="glass-card p-6 rounded-2xl space-y-3">
+          <div class="text-brand-violet"><i data-lucide="globe" class="w-8 h-8"></i></div>
+          <h4 class="font-bold text-white">Website Profile</h4>
+          <p class="text-xs text-gray-400 leading-relaxed">Landing page interaktif premium untuk merepresentasikan keunikan brand Anda secara memikat.</p>
+        </div>
+        <div class="glass-card p-6 rounded-2xl space-y-3">
+          <div class="text-brand-violet"><i data-lucide="shopping-cart" class="w-8 h-8"></i></div>
+          <h4 class="font-bold text-white">E-Commerce System</h4>
+          <p class="text-xs text-gray-400 leading-relaxed">Platform toko online responsif lengkap dengan manajemen katalog, inventori, dan kasir.</p>
+        </div>
+        <div class="glass-card p-6 rounded-2xl space-y-3">
+          <div class="text-brand-violet"><i data-lucide="cpu" class="w-8 h-8"></i></div>
+          <h4 class="font-bold text-white">Business Automation</h4>
+          <p class="text-xs text-gray-400 leading-relaxed">Sistem operasional otomatis guna menyederhanakan data admin, absensi, dan laporan keuangan.</p>
+        </div>
+        <div class="glass-card p-6 rounded-2xl space-y-3">
+          <div class="text-brand-violet"><i data-lucide="layers" class="w-8 h-8"></i></div>
+          <h4 class="font-bold text-white">UI/UX & Custom App</h4>
+          <p class="text-xs text-gray-400 leading-relaxed">Rancang visual khusus, dasbor analitik, atau platform sistem internal terintegrasi API.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SECTION 3: PORTFOLIO & TESTIMONIAL
+         ========================================== -->
+    <section id="section-portfolio" class="hidden py-12">
+      <div class="text-center max-w-2xl mx-auto mb-16 space-y-4">
+        <div class="text-brand-violet text-sm uppercase tracking-widest font-extrabold">Showcase</div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Our Signature Solutions</h2>
+        <p class="text-gray-400">
+          Berikut adalah 3 proyek andalan website murni yang dirancang untuk mendukung kebutuhan dan skalabilitas proses bisnis klien kami.
+        </p>
+      </div>
+
+      <!-- Portfolio Projects Grid (Dinamis & Tepat 3 Item Gambar Website Murni Tanpa Laptop) -->
+      <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+        <!-- Dimuat Dinamis via JavaScript -->
+      </div>
+
+      <!-- Testimonials (Tepat 4 Ulasan Klien Sesuai Gambar 5.25.55_PM) -->
+      <h3 class="text-2xl font-extrabold text-white text-center mb-8">What Our Clients Say</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="glass-card p-8 rounded-2xl space-y-4">
+          <div class="flex gap-1 text-amber-400">
+            <i data-lucide="star" class="fill-current w-4 h-4"></i>
+            <i data-lucide="star" class="fill-current w-4 h-4"></i>
+            <i data-lucide="star" class="fill-current w-4 h-4"></i>
+            <i data-lucide="star" class="fill-current w-4 h-4"></i>
+            <i data-lucide="star" class="fill-current w-4 h-4"></i>
+          </div>
+          <p class="text-sm text-gray-300 italic leading-relaxed">
+            "Sangat puas bermitra dengan CHARSTUDIO.ID. Aplikasi dashboard CRM kami selesai tepat waktu dan integrasi datanya instan tanpa lemot sama sekali!"
+          </p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-brand-violet/20 flex items-center justify-center font-bold text-brand-violet text-sm">HN</div>
+            <div>
+              <div class="text-xs font-bold text-white">Hendra Nugroho</div>
+              <div class="text-[10px] text-gray-500">CTO, Veloce Digital</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card p-8 rounded-2xl space-y-4">
+          <div class="flex gap-1 text-amber-400">
+            <i data-lucide="star" class="fill-current w-4 h-4"></i>
+            <i data-lucide="star" class="fill-current w-4 h-4"></i>
+            <i data-lucide="star" class="fill-current w-4 h-4"></i>
+            <i data-lucide="star" class="fill-current w-4 h-4"></i>
+            <i data-lucide="star" class="fill-current w-4 h-4"></i>
+          </div>
+          <p class="text-sm text-gray-300 italic leading-relaxed">
+            "Tim CHARSTUDIO sangat profesional dalam menerjemahkan logika checkout e-commerce kami yang rumit menjadi fungsionalitas yang mulus untuk pelanggan mobile kami."
+          </p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-brand-violet/20 flex items-center justify-center font-bold text-brand-violet text-sm">AM</div>
+            <div>
+              <div class="text-xs font-bold text-white">Anindita Maharani</div>
+              <div class="text-[10px] text-gray-500">Operation Director, Luxor Group</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card p-8 rounded-2xl space-y-4">
+          <div class="flex gap-1 text-amber-400">
+            <i data-lucide="star" class="fill-current w-4 h-4"></i>
+            <i data-lucide="star" class="fill-current w-4 h-4"></i>
+            <i data-lucide="star" class="fill-current w-4 h-4"></i>
+            <i data-lucide="star" class="fill-current w-4 h-4"></i>
+            <i data-lucide="star" class="fill-current w-4 h-4"></i>
+          </div>
+          <p class="text-sm text-gray-300 italic leading-relaxed">
+            "Peralihan sistem absensi kami ke otomatisasi awan berjalan mulus luar biasa. Efisiensi admin kami melonjak tajam setelah didigitalisasi."
+          </p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-brand-violet/20 flex items-center justify-center font-bold text-brand-violet text-sm">RH</div>
+            <div>
+              <div class="text-xs font-bold text-white">Rian Hidayat</div>
+              <div class="text-[10px] text-gray-500">HR Director, Aero Group</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card p-8 rounded-2xl space-y-4">
+          <div class="flex gap-1 text-amber-400">
+            <i data-lucide="star" class="fill-current w-4 h-4"></i>
+            <i data-lucide="star" class="fill-current w-4 h-4"></i>
+            <i data-lucide="star" class="fill-current w-4 h-4"></i>
+            <i data-lucide="star" class="fill-current w-4 h-4"></i>
+            <i data-lucide="star" class="fill-current w-4 h-4"></i>
+          </div>
+          <p class="text-sm text-gray-300 italic leading-relaxed">
+            "Sistem monitoring operasional internal kami terstruktur dengan sangat rapi. Penanganan data real-time-nya bebas delay!"
+          </p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-brand-violet/20 flex items-center justify-center font-bold text-brand-violet text-sm">FS</div>
+            <div>
+              <div class="text-xs font-bold text-white">Ferry Setiawan</div>
+              <div class="text-[10px] text-gray-500">CEO, Apex Commerce</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SECTION 4: INTERACTIVE PRICE CALCULATOR & CONTACT
+         ========================================== -->
+    <section id="section-calculator" class="hidden py-12">
+      <div class="text-center max-w-2xl mx-auto mb-16 space-y-4">
+        <div class="text-brand-violet text-sm uppercase tracking-widest font-extrabold">Instant Quote & Lead</div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Interactive Pricing & Contact</h2>
+        <p class="text-gray-400">
+          Kalkulasikan perkiraan investasi aplikasi Anda secara transparan dan hubungi kami secara langsung untuk memulai pembuatan.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Contact Us Form (Left 7 Columns) -->
+        <div class="lg:col-span-7 glass-card p-8 rounded-2xl space-y-6">
+          <h3 class="text-xl font-bold text-white flex items-center gap-2">
+            <i data-lucide="mail-check" class="text-brand-violet w-5 h-5"></i>
+            Formulir Kontak Klien
+          </h3>
+
+          <form id="lead-form" class="space-y-4" onsubmit="handleFormSubmission(event)">
+            <div>
+              <label for="form-name" class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Nama Lengkap Anda</label>
+              <input type="text" id="form-name" required placeholder="Contoh: Budi Santoso"
+                class="w-full bg-brand-darker border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-brand-violet transition-colors">
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label for="form-email" class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Alamat Email</label>
+                <input type="email" id="form-email" required placeholder="Contoh: budi@company.com"
+                  class="w-full bg-brand-darker border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-brand-violet transition-colors">
+              </div>
+              <div>
+                <label for="form-whatsapp" class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">No. WhatsApp</label>
+                <input type="text" id="form-whatsapp" required placeholder="Contoh: 081234567890"
+                  class="w-full bg-brand-darker border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-brand-violet transition-colors">
+              </div>
+            </div>
+
+            <!-- Pilihan Layanan Utama -->
+            <div>
+              <label for="form-service" class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Pilih Kebutuhan Utama Layanan</label>
+              <select id="form-service" onchange="handleServiceSelectionChange()"
+                class="w-full bg-brand-darker border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-violet transition-colors">
+                <!-- Dimuat secara dinamis -->
+              </select>
+            </div>
+
+            <!-- Custom Input Box (Hanya Muncul Jika Pilih "Custom") -->
+            <div id="custom-service-container" class="hidden">
+              <label for="form-service-custom" class="block text-xs font-semibold text-brand-violet uppercase tracking-wider mb-2">Tuliskan Kebutuhan Aplikasi Kustom Anda</label>
+              <input type="text" id="form-service-custom" placeholder="Contoh: Aplikasi Sistem Inventori Gudang"
+                class="w-full bg-brand-darker border border-brand-violet/40 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-brand-violet transition-colors">
+            </div>
+
+            <!-- Price Output Box (Posisi Persis di Bawah Dropdown Layanan Sesuai Gambar 5.25.55_PM) -->
+            <div class="bg-brand-violet/5 border border-brand-violet/15 p-4 rounded-xl flex items-center justify-between">
+              <div>
+                <p class="text-[10px] text-gray-400 uppercase tracking-wider font-semibold">Perkiraan Harga Layanan</p>
+                <p id="form-service-price-output" class="text-xl font-extrabold text-white">Rp2.500.000</p>
+              </div>
+              <span id="service-price-badge" class="bg-brand-violet/20 text-brand-violet text-[10px] font-bold px-3 py-1 rounded-full">Harga Dasar</span>
+            </div>
+
+            <!-- Pesan -->
+            <div>
+              <label for="form-message" class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">PESAN</label>
+              <textarea id="form-message" rows="4" required placeholder="Gambarkan rincian detail fitur atau tujuan pembuatan aplikasi Anda..."
+                class="w-full bg-brand-darker border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-brand-violet transition-colors"></textarea>
+            </div>
+
+            <button type="submit" id="submit-btn" class="w-full bg-gradient-to-r from-brand-blue to-brand-violet hover:from-brand-blue/95 hover:to-brand-violet/95 text-white py-4 rounded-xl font-bold transition-all transform active:scale-95 text-sm flex items-center justify-center gap-2">
+              <span id="btn-text">Kirim Penawaran & Hubungi Admin</span>
+              <span id="btn-spinner" class="hidden animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Price Calculator Summary Panel (Right 5 Columns) -->
+        <div class="lg:col-span-5 space-y-6">
+          <div class="glass-card p-8 rounded-2xl space-y-6 relative overflow-hidden">
+            <div class="absolute -right-16 -top-16 w-32 h-32 bg-brand-violet/10 rounded-full blur-2xl"></div>
+            
+            <h3 class="text-xl font-bold text-white flex items-center gap-2">
+              <i data-lucide="calculator" class="text-brand-violet w-5 h-5"></i>
+              Kalkulator Harga Instan
+            </h3>
+
+            <div class="space-y-4 pt-2">
+              <div class="flex justify-between items-center text-sm border-b border-white/5 pb-3">
+                <span class="text-gray-400">Harga Dasar Layanan:</span>
+                <span id="calc-base-price" class="text-white font-semibold">Rp0</span>
+              </div>
+
+              <div class="bg-brand-violet/5 border border-brand-violet/10 rounded-xl p-4 flex flex-col gap-1">
+                <span class="text-xs text-brand-violet uppercase tracking-wider font-extrabold">Total Estimasi Investasi</span>
+                <span id="calc-total-price" class="text-2xl font-extrabold text-white">Rp0</span>
+                <span class="text-[10px] text-gray-500 italic mt-1">*Nilai di atas masih berupa estimasi awal dan dapat berubah pasca diskusi kebutuhan.</span>
+              </div>
+            </div>
+
+            <!-- Fast Contact Methods (WhatsApp baru 6282150904713 & Instagram) -->
+            <div class="pt-4 border-t border-white/5 space-y-3">
+              <span class="block text-xs font-semibold text-gray-400 uppercase tracking-wider">Fast Response Contact</span>
+              <div class="flex flex-col gap-2">
+                <a id="wa-contact-card" href="https://wa.me/6282150904713" target="_blank" class="flex items-center gap-3 bg-brand-violet/10 hover:bg-brand-violet/20 border border-brand-violet/30 p-3 rounded-xl text-xs text-brand-violet transition-colors">
+                  <i data-lucide="message-square" class="w-4 h-4"></i>
+                  <span id="wa-contact-text">WhatsApp Resmi: +62 821-5090-4713</span>
+                </a>
+                <a id="ig-contact-card" href="https://instagram.com/charstudio.id" target="_blank" class="flex items-center gap-3 bg-brand-blue/10 hover:bg-brand-blue/20 border border-brand-blue/30 p-3 rounded-xl text-xs text-brand-blue transition-colors">
+                  <i data-lucide="instagram" class="w-4 h-4"></i>
+                  <span>Instagram Resmi: @charstudio.id</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <div id="toast-notif" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+    <div id="toast-body" class="bg-brand-darker border border-brand-violet p-4 rounded-xl shadow-2xl flex items-center gap-3">
+      <div id="toast-icon-success" class="text-brand-violet"><i data-lucide="check-circle" class="w-6 h-6"></i></div>
+      <div id="toast-icon-error" class="text-rose-500 hidden"><i data-lucide="alert-triangle" class="w-6 h-6"></i></div>
+      <div>
+        <p id="toast-title" class="text-xs font-bold text-white">Notifikasi</p>
+        <p id="toast-message" class="text-[11px] text-gray-300 max-w-xs mt-0.5">Pesan sistem di sini.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       FOOTER
+       ========================================== -->
+  <footer class="bg-brand-darker border-t border-white/5 py-8 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 flex items-center justify-center bg-white rounded-full p-0.5 shadow-sm">
+          <svg class="w-full h-full" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="256" cy="256" r="240" fill="white"/>
+            <defs>
+              <linearGradient id="logoGradientFooter" x1="100" y1="100" x2="412" y2="412" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#2563EB"/>
+                <stop offset="100%" stop-color="#7C3AED"/>
+              </linearGradient>
+            </defs>
+            <path d="M 340,140 C 230,140 140,210 140,300 C 140,380 210,430 300,430 C 315,430 350,420 350,400 C 350,385 330,375 315,375 C 240,375 195,335 195,290 C 195,230 250,195 320,195 C 335,195 350,190 350,175 C 350,155 315,140 340,140 Z" fill="url(#logoGradientFooter)"/>
+            <path d="M 172,372 C 282,372 372,302 372,212 C 372,132 302,82 213,82 C 198,82 163,92 163,112 C 163,127 183,137 198,137 C 273,137 318,177 318,222 C 318,282 263,317 193,317 C 178,317 163,322 163,337 C 163,357 198,372 172,372 Z" fill="url(#logoGradientFooter)"/>
+          </svg>
+        </div>
+        <span class="text-sm font-bold text-white">CHARSTUDIO<span class="text-brand-violet font-semibold">.ID</span></span>
+      </div>
+      <div class="text-xs text-gray-500">
+        &copy; 2026 CHARSTUDIO.ID
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    let pricingDatabase = [];
+
+    // ============================================================
+    //  >>>>>  TEMPEL WEB APP URL GOOGLE APPS SCRIPT DI SINI  <<<<<
+    // ============================================================
+    //  Setelah Deploy > New deployment > Web app di Apps Script,
+    //  salin "Web app URL" dan tempel di antara tanda kutip.
+    //  Contoh: https://script.google.com/macros/s/AKfycb..../exec
+    //  Kalau kosong (""), situs tetap jalan pakai data contoh di bawah.
+    // ============================================================
+    const GSHEET_WEB_APP_URL = "";
+
+    // Fallback Portfolio (Tepat 3 gambar screenshot web murni tanpa laptop)
+    const fallbackPortfolioData = [
+      {
+        id: "PORT-01",
+        nama: "Veloce Wealth Dashboard",
+        kategori: "FinTech System",
+        deskripsi: "Dasbor pelacakan investasi portofolio modern dengan sinkronisasi grafik interaktif, pemrosesan batch, dan analisis profit otomatis harian.",
+        imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: "PORT-02",
+        nama: "Luxor Furnishing Store",
+        kategori: "E-Commerce Portal",
+        deskripsi: "Platform e-commerce ritel furniture kelas dunia, dilengkapi dengan optimasi rendering visual kustom, kalkulator pajak, dan pelacakan order instan.",
+        imageUrl: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: "PORT-03",
+        nama: "AeroHR Core Platform",
+        kategori: "SaaS Platform",
+        deskripsi: "Sistem manajemen kepegawaian internal berskala korporat, memproses pencatatan absensi, pengajuan cuti, serta reimbursement otomatis secara cloud-sync.",
+        imageUrl: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80"
+      }
+    ];
+
+    // Update Sesuai Revisi 2 (Nama & Harga Layanan Baru)
+    const fallbackPricingData = [
+      { id: "SERV-01", nama: "Company Profile Website", harga: 2500000 },
+      { id: "SERV-02", nama: "Absensi", harga: 2000000 },
+      { id: "SERV-03", nama: "Financial Portfolio", harga: 1500000 }
+    ];
+
+    // Kontak konfigurasi default ke nomor baru Anda (Revisi 1)
+    let contactConfig = {
+      whatsapp: "6282150904713",
+      phoneCallLink: "https://wa.me/6282150904713",
+      instagramLink: "https://instagram.com/charstudio.id"
+    };
+
+    document.addEventListener("DOMContentLoaded", function() {
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      }
+      loadAllDataFromSheet();
+    });
+
+    /**
+     * JALUR A (Vercel): ambil SEMUA data (pricing, portfolio, contact) dari
+     * Google Apps Script Web App via fetch() dalam satu request.
+     * Kalau URL kosong / gagal, otomatis pakai fallback.
+     */
+    function loadAllDataFromSheet() {
+      if (!GSHEET_WEB_APP_URL) {
+        pricingDatabase = fallbackPricingData;
+        populatePricingDropdown(pricingDatabase);
+        renderPortfolios(fallbackPortfolioData);
+        applyContactConfig(contactConfig);
+        return;
+      }
+
+      fetch(GSHEET_WEB_APP_URL + "?type=all")
+        .then(function(res) {
+          if (!res.ok) throw new Error("HTTP " + res.status);
+          return res.json();
+        })
+        .then(function(data) {
+          // Harga
+          if (data.pricing && data.pricing.length > 0) {
+            pricingDatabase = data.pricing;
+          } else {
+            pricingDatabase = fallbackPricingData;
+          }
+          populatePricingDropdown(pricingDatabase);
+
+          // Portfolio
+          if (data.portfolio && data.portfolio.length > 0) {
+            renderPortfolios(data.portfolio);
+          } else {
+            renderPortfolios(fallbackPortfolioData);
+          }
+
+          // Kontak
+          if (data.contact && data.contact.whatsapp) {
+            contactConfig = data.contact;
+          }
+          applyContactConfig(contactConfig);
+        })
+        .catch(function(err) {
+          console.error("Gagal memuat data dari Google Sheet: ", err);
+          pricingDatabase = fallbackPricingData;
+          populatePricingDropdown(pricingDatabase);
+          renderPortfolios(fallbackPortfolioData);
+          applyContactConfig(contactConfig);
+        });
+    }
+
+    /**
+     * Mengaplikasikan tautan kontak dinamis ke seluruh antarmuka
+     */
+    function applyContactConfig(config) {
+      const waCard = document.getElementById("wa-contact-card");
+      if (waCard) {
+        waCard.href = "https://wa.me/" + config.whatsapp;
+        const waText = document.getElementById("wa-contact-text");
+        if (waText) {
+          waText.textContent = "WhatsApp Resmi: +" + config.whatsapp;
+        }
+      }
+
+      const igCard = document.getElementById("ig-contact-card");
+      if (igCard) {
+        igCard.href = config.instagramLink;
+      }
+
+      const phoneBtn = document.getElementById("phone-nav-btn");
+      if (phoneBtn) {
+        phoneBtn.href = config.phoneCallLink;
+      }
+
+      const phoneBtnMobile = document.getElementById("phone-nav-btn-mobile");
+      if (phoneBtnMobile) {
+        phoneBtnMobile.href = config.phoneCallLink;
+      }
+    }
+
+    /**
+     * Merender Portofolio (Persis 3 foto website murni tanpa laptop/device)
+     */
+    function renderPortfolios(portfolioList) {
+      const grid = document.getElementById("portfolio-grid");
+      if (!grid) return;
+      grid.innerHTML = "";
+
+      portfolioList.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "glass-card rounded-2xl overflow-hidden group";
+        
+        card.innerHTML = 
+          '<div class="relative h-48 bg-slate-800 overflow-hidden">' +
+            '<img src="' + item.imageUrl + '" alt="' + item.nama + '" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">' +
+            '<div class="absolute inset-0 bg-gradient-to-t from-brand-black/80 via-transparent to-transparent"></div>' +
+          '</div>' +
+          '<div class="p-6 space-y-3">' +
+            '<span class="text-brand-violet text-xs font-semibold tracking-wider uppercase">' + item.kategori + '</span>' +
+            '<h4 class="text-lg font-bold text-white group-hover:text-brand-violet transition-colors">' + item.nama + '</h4>' +
+            '<p class="text-xs text-gray-400 leading-relaxed">' + item.deskripsi + '</p>' +
+          '</div>';
+          
+        grid.appendChild(card);
+      });
+    }
+
+    function populatePricingDropdown(pricingList) {
+      const selectElement = document.getElementById("form-service");
+      selectElement.innerHTML = ""; 
+
+      pricingList.forEach(item => {
+        const option = document.createElement("option");
+        option.value = item.id;
+        option.textContent = item.nama;
+        selectElement.appendChild(option);
+      });
+
+      const optionCustom = document.createElement("option");
+      optionCustom.value = "CUSTOM";
+      optionCustom.textContent = "Custom / Tulis Sendiri Layanan Anda";
+      selectElement.appendChild(optionCustom);
+
+      updatePriceOutputs();
+    }
+
+    function handleServiceSelectionChange() {
+      const selectElement = document.getElementById("form-service");
+      const customContainer = document.getElementById("custom-service-container");
+      const customInput = document.getElementById("form-service-custom");
+
+      if (selectElement.value === "CUSTOM") {
+        customContainer.classList.remove("hidden");
+        customInput.required = true;
+      } else {
+        customContainer.classList.add("hidden");
+        customInput.required = false;
+        customInput.value = "";
+      }
+
+      updatePriceOutputs();
+    }
+
+    function updatePriceOutputs() {
+      const selectElement = document.getElementById("form-service");
+      const selectedId = selectElement.value;
+      
+      let basePrice = 0;
+      let isCustom = false;
+
+      if (selectedId === "CUSTOM") {
+        basePrice = 5000000; // Default estimasi awal custom
+        isCustom = true;
+      } else {
+        const selectedService = pricingDatabase.find(item => item.id === selectedId);
+        basePrice = selectedService ? selectedService.harga : 0;
+      }
+
+      const formattedPrice = formatCurrencyIDR(basePrice);
+
+      document.getElementById("form-service-price-output").textContent = formattedPrice;
+      document.getElementById("service-price-badge").textContent = isCustom ? "Estimasi Mulai" : "Harga Dasar";
+      document.getElementById("calc-base-price").textContent = formattedPrice;
+      document.getElementById("calc-total-price").textContent = formattedPrice;
+    }
+
+    function handleFormSubmission(event) {
+      event.preventDefault();
+
+      const name = document.getElementById("form-name").value;
+      const email = document.getElementById("form-email").value;
+      const whatsapp = document.getElementById("form-whatsapp").value;
+      const selectElement = document.getElementById("form-service");
+      
+      let selectedServiceName = "";
+      if (selectElement.value === "CUSTOM") {
+        selectedServiceName = "Custom: " + document.getElementById("form-service-custom").value;
+      } else {
+        selectedServiceName = selectElement.options[selectElement.selectedIndex].text;
+      }
+      
+      const message = document.getElementById("form-message").value;
+      const totalPriceText = document.getElementById("calc-total-price").textContent;
+      const numericTotalPrice = parseInt(totalPriceText.replace(/[^0-9]/g, ''), 10);
+
+      const payload = {
+        nama: name,
+        email: email,
+        whatsapp: whatsapp,
+        jenisApp: selectedServiceName,
+        estimasiHarga: numericTotalPrice,
+        pesan: message
+      };
+
+      toggleLoadingState(true);
+
+      const clientTicketId = "CHAR-" + new Date().toISOString().slice(0,10).replace(/-/g,"") + "-" + String(Math.floor(Math.random() * 9000) + 1000);
+
+      // Kalau URL belum diisi -> mode lokal (tetap redirect WhatsApp)
+      if (!GSHEET_WEB_APP_URL) {
+        setTimeout(function() {
+          toggleLoadingState(false);
+          showToast("Lead Berhasil Dikirim!", "Tiket Anda " + clientTicketId + " sukses didaftarkan (Simulasi lokal).", true);
+          generateWhatsAppRedirect(payload, clientTicketId);
+          document.getElementById("lead-form").reset();
+          handleServiceSelectionChange();
+        }, 1200);
+        return;
+      }
+
+      // Kirim ke Google Sheet via fetch POST (no-cors: data tetap masuk Sheet)
+      fetch(GSHEET_WEB_APP_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload)
+      })
+        .then(function() {
+          toggleLoadingState(false);
+          showToast("Lead Sukses Tersimpan!", "Tiket Anda " + clientTicketId + " sukses didaftarkan.", true);
+          generateWhatsAppRedirect(payload, clientTicketId);
+          document.getElementById("lead-form").reset();
+          handleServiceSelectionChange();
+        })
+        .catch(function(error) {
+          toggleLoadingState(false);
+          showToast("Tersimpan Sebagian", "Gagal simpan ke Sheet, lanjut via WhatsApp.", false);
+          generateWhatsAppRedirect(payload, clientTicketId);
+          document.getElementById("lead-form").reset();
+          handleServiceSelectionChange();
+        });
+    }
+
+    function generateWhatsAppRedirect(data, ticketId) {
+      // Selalu langsung sambungkan ke WhatsApp admin nomor baru (Revisi 1)
+      const targetWhatsApp = "6282150904713";
+      
+      const templateText = 
+        "Halo Admin *CHARSTUDIO.ID*, saya ingin berdiskusi mengenai proyek aplikasi digital.\n\n" +
+        "*DETAIL TIKET LAYANAN:*\n" +
+        "• *ID Tiket:* " + ticketId + "\n" +
+        "• *Nama Klien:* " + data.nama + "\n" +
+        "• *Email:* " + data.email + "\n" +
+        "• *WhatsApp:* " + data.whatsapp + "\n" +
+        "• *Layanan:* " + data.jenisApp + "\n" +
+        "• *Estimasi Investasi:* " + formatCurrencyIDR(data.estimasiHarga) + "\n\n" +
+        "*Pesan Tambahan:* \n\"" + data.pesan + "\"\n\n" +
+        "Mohon info ketersediaan slot pengerjaannya. Terima kasih!";
+
+      const encodedText = encodeURIComponent(templateText);
+      const waURL = "https://api.whatsapp.com/send?phone=" + targetWhatsApp + "&text=" + encodedText;
+      window.open(waURL, '_blank');
+    }
+
+    function toggleLoadingState(isLoading) {
+      const btn = document.getElementById("submit-btn");
+      const text = document.getElementById("btn-text");
+      const spinner = document.getElementById("btn-spinner");
+
+      if (isLoading) {
+        btn.disabled = true;
+        btn.classList.add("opacity-70", "cursor-not-allowed");
+        text.classList.add("hidden");
+        spinner.classList.remove("hidden");
+      } else {
+        btn.disabled = false;
+        btn.classList.remove("opacity-70", "cursor-not-allowed");
+        text.classList.remove("hidden");
+        spinner.classList.add("hidden");
+      }
+    }
+
+    function showToast(title, message, isSuccess) {
+      const toast = document.getElementById("toast-notif");
+      const toastTitle = document.getElementById("toast-title");
+      const toastMsg = document.getElementById("toast-message");
+      const iconSuccess = document.getElementById("toast-icon-success");
+      const iconError = document.getElementById("toast-icon-error");
+
+      toastTitle.textContent = title;
+      toastMsg.textContent = message;
+
+      if (isSuccess) {
+        iconSuccess.classList.remove("hidden");
+        iconError.classList.add("hidden");
+      } else {
+        iconSuccess.classList.add("hidden");
+        iconError.classList.remove("hidden");
+      }
+
+      toast.classList.remove("translate-y-24", "opacity-0", "pointer-events-none");
+      toast.classList.add("translate-y-0", "opacity-100");
+
+      setTimeout(function() {
+        toast.classList.remove("translate-y-0", "opacity-100");
+        toast.classList.add("translate-y-24", "opacity-0", "pointer-events-none");
+      }, 5000);
+    }
+
+    function switchTab(tabId) {
+      const sections = ['home', 'about', 'portfolio', 'calculator'];
+      
+      sections.forEach(sec => {
+        const sectionEl = document.getElementById('section-' + sec);
+        const navEl = document.getElementById('nav-' + sec);
+        
+        if (sec === tabId) {
+          sectionEl.classList.remove("hidden");
+          sectionEl.classList.add("section-active");
+          if (navEl) {
+            navEl.classList.add("text-brand-violet");
+            navEl.classList.remove("text-gray-300");
+          }
+        } else {
+          sectionEl.classList.add("hidden");
+          sectionEl.classList.remove("section-active");
+          if (navEl) {
+            navEl.classList.remove("text-brand-violet");
+            navEl.classList.add("text-gray-300");
+          }
+        }
+      });
+      
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function toggleMobileMenu() {
+      const menu = document.getElementById("mobile-menu");
+      menu.classList.toggle("hidden");
+    }
+
+    function formatCurrencyIDR(val) {
+      return new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      }).format(val);
+    }
+  </script>
+</body>
+</html>
